@@ -52,4 +52,11 @@ BUILTIN_DTB := n
 endif
 core-$(BUILTIN_DTB) += arch/openrisc/boot/dts/
 
+nios2-boot := arch/$(ARCH)/boot
+BOOT_TARGETS = vmImage zImage
+PHONY += $(BOOT_TARGETS) install
+KBUILD_IMAGE := $(nios2-boot)/vmImage
+$(BOOT_TARGETS): vmlinux
+	$(Q)$(MAKE) $(build)=$(nios2-boot) $(nios2-boot)/$@
+
 all: vmlinux
